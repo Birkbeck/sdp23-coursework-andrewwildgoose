@@ -50,6 +50,14 @@ public abstract class Instruction {
 
 	// TODO: What does abstract in the declaration below mean?
 	//       (Write a short explanation.)
+
+	/**
+	 * abstract methods within an abstract class inform all
+	 * sublclasses that they must implement the specified
+	 * method within the subclass and define the specific
+	 * use of it within that subclass.
+	 * @return a String representation of the Instruction
+	 */
 	@Override
 	public abstract String toString();
 
