@@ -18,7 +18,7 @@ public class MulInstruction extends Instruction {
 	private final RegisterName result;
 	private final RegisterName source;
 
-	public static final String OP_CODE = "sub";
+	public static final String OP_CODE = "mul";
 
 	public MulInstruction(String label, RegisterName result, RegisterName source) {
 		super(label, OP_CODE);
@@ -39,15 +39,4 @@ public class MulInstruction extends Instruction {
 		return getLabelString() + getOpcode() + " " + result + " " + source;
 	}
 
-
-	// TODO: implement this method
-	public boolean equals(Instruction instruction) {
-		return false;
-	}
-
-	@Override
-	// TODO: implement this method
-	public int hashCode() {
-		return 0;
-	}
 }
