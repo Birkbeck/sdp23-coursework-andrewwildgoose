@@ -53,7 +53,7 @@ public abstract class Instruction {
 
 	/**
 	 * abstract methods within an abstract class inform all
-	 * sublclasses that they must implement the specified
+	 * subclasses that they must implement the specified
 	 * method within the subclass and define the specific
 	 * use of it within that subclass.
 	 * @return a String representation of the Instruction
@@ -62,4 +62,11 @@ public abstract class Instruction {
 	public abstract String toString();
 
 	// TODO: Make sure that subclasses also implement equals and hashCode (needed in class Machine).
+
+	public abstract boolean equals(Instruction instruction);
+
+	@Override
+	public abstract int hashCode();
+
+
 }
