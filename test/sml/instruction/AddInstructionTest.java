@@ -67,4 +67,50 @@ class AddInstructionTest {
     String testOutput = instruction.toString();
     Assertions.assertEquals(expectedOutput, testOutput);
   }
+
+  @Test
+  void equalsTestTrue() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction1 = new AddInstruction(null, EAX, EBX);
+    Instruction instruction2 = new AddInstruction(null, EAX, EBX);
+    Assertions.assertTrue(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void equalsTestTrueTwo() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction1 = new AddInstruction("f3", EAX, EBX);
+    Instruction instruction2 = new AddInstruction("f3", EAX, EBX);
+    Assertions.assertTrue(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void equalsTestFalse() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction1 = new AddInstruction(null, EAX, EBX);
+    Instruction instruction2 = new AddInstruction(null, EBX, EAX);
+    Assertions.assertFalse(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void equalsTestFalseTwo() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction1 = new AddInstruction("f3", EAX, EBX);
+    Instruction instruction2 = new AddInstruction(null, EAX, EBX);
+    Assertions.assertFalse(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void hashCodeTest() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction = new AddInstruction("f3", EAX, EBX);
+    instruction.execute(machine);
+    Object hash = instruction.hashCode();
+    Assertions.assertEquals(6106410, hash);
+  }
 }

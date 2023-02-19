@@ -70,4 +70,48 @@ class OutInstructionTest {
     String testOutput = instruction.toString();
     Assertions.assertEquals(expectedOutput, testOutput);
   }
+
+  @Test
+  void equalsTestTrue() {
+    registers.set(EAX, 5);
+    Instruction instruction1 = new OutInstruction(null, EAX);
+    Instruction instruction2 = new OutInstruction(null, EAX);
+    Assertions.assertTrue(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void equalsTestTrueTwo() {
+    registers.set(EAX, 5);
+    Instruction instruction1 = new OutInstruction("f3", EAX);
+    Instruction instruction2 = new OutInstruction("f3", EAX);
+    Assertions.assertTrue(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void equalsTestFalse() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction1 = new OutInstruction(null, EAX);
+    Instruction instruction2 = new OutInstruction(null, EBX);
+    Assertions.assertFalse(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void equalsTestFalseTwo() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction1 = new OutInstruction("f3", EAX);
+    Instruction instruction2 = new OutInstruction(null, EAX);
+    Assertions.assertFalse(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void hashCodeTest() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction = new OutInstruction(null, EAX);
+    instruction.execute(machine);
+    Object hash = instruction.hashCode();
+    Assertions.assertEquals(3452624, hash);
+  }
 }

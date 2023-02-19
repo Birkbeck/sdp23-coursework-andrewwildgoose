@@ -64,4 +64,55 @@ class MovInstructionTest {
     String testOutput = instruction.toString();
     Assertions.assertEquals(expectedOutput, testOutput);
   }
+
+  @Test
+  void equalsTestTrue() {
+    registers.set(EAX, 5);
+    Instruction instruction1 = new MovInstruction(null, EAX, 5);
+    Instruction instruction2 = new MovInstruction(null, EAX, 5);
+    Assertions.assertTrue(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void equalsTestTrueTwo() {
+    registers.set(EAX, 5);
+    Instruction instruction1 = new MovInstruction("f3", EAX, -5);
+    Instruction instruction2 = new MovInstruction("f3", EAX, -5);
+    Assertions.assertTrue(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void equalsTestFalse() {
+    registers.set(EAX, 5);
+    Instruction instruction1 = new MovInstruction(null, EAX, 5);
+    Instruction instruction2 = new MovInstruction(null, EAX, -5);
+    Assertions.assertFalse(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void equalsTestFalseTwo() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction1 = new MovInstruction(null, EAX, 5);
+    Instruction instruction2 = new MovInstruction(null, EBX, 5);
+    Assertions.assertFalse(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void equalsTestFalseThree() {
+    registers.set(EAX, 5);
+    Instruction instruction1 = new MovInstruction("f3", EAX, -6);
+    Instruction instruction2 = new MovInstruction(null, EAX, -6);
+    Assertions.assertFalse(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void hashCodeTest() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction = new MovInstruction(null, EAX, 5);
+    instruction.execute(machine);
+    Object hash = instruction.hashCode();
+    Assertions.assertEquals(3387338, hash);
+  }
 }

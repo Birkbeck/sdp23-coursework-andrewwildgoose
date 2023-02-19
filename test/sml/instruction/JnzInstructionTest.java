@@ -64,4 +64,56 @@ class JnzInstructionTest {
     String testOutput = instruction.toString();
     Assertions.assertEquals(expectedOutput, testOutput);
   }
+
+  @Test
+  void equalsTestTrue() {
+    registers.set(EAX, 5);
+    Instruction instruction1 = new JnzInstruction(null, EAX, "f3");
+    Instruction instruction2 = new JnzInstruction(null, EAX, "f3");
+    Assertions.assertTrue(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void equalsTestTrueTwo() {
+    registers.set(EAX, 5);
+    Instruction instruction1 = new JnzInstruction("f3", EAX, "f1");
+    Instruction instruction2 = new JnzInstruction("f3", EAX, "f1");
+    Assertions.assertTrue(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void equalsTestFalse() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 5);
+    Instruction instruction1 = new JnzInstruction(null, EAX, "f3");
+    Instruction instruction2 = new JnzInstruction(null, EBX, "f3");
+    Assertions.assertFalse(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void equalsTestFalseTwo() {
+    registers.set(EAX, 5);
+    Instruction instruction1 = new JnzInstruction("f3", EAX, "f1");
+    Instruction instruction2 = new JnzInstruction(null, EAX, "f1");
+    Assertions.assertFalse(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void equalsTestFalseThree() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 5);
+    Instruction instruction1 = new JnzInstruction(null, EAX, "f3");
+    Instruction instruction2 = new JnzInstruction(null, EAX, "f1");
+    Assertions.assertFalse(instruction1.equals(instruction2));
+  }
+
+  @Test
+  void hashCodeTest() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction = new JnzInstruction(null, EAX, "f3");
+    instruction.execute(machine);
+    Object hash = instruction.hashCode();
+    Assertions.assertEquals(3297128, hash);
+  }
 }
