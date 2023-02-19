@@ -45,4 +45,26 @@ class SubInstructionTest {
     instruction.execute(machine);
     Assertions.assertEquals(-11, machine.getRegisters().get(EAX));
   }
+
+  @Test
+  void toStringTest() {
+    String expectedOutput = "sub EAX EBX";
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction = new SubInstruction(null, EAX, EBX);
+    instruction.execute(machine);
+    String testOutput = instruction.toString();
+    Assertions.assertEquals(expectedOutput, testOutput);
+  }
+
+  @Test
+  void toStringWithLabelTest() {
+    String expectedOutput = "f3: sub EAX EBX";
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction = new SubInstruction("f3", EAX, EBX);
+    instruction.execute(machine);
+    String testOutput = instruction.toString();
+    Assertions.assertEquals(expectedOutput, testOutput);
+  }
 }

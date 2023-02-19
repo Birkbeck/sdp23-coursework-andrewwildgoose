@@ -45,4 +45,26 @@ class DivInstructionTest {
     instruction.execute(machine);
     Assertions.assertEquals(-4, machine.getRegisters().get(EAX));
   }
+
+  @Test
+  void toStringTest() {
+    String expectedOutput = "div EAX EBX";
+    registers.set(EAX, 10);
+    registers.set(EBX, 2);
+    Instruction instruction = new DivInstruction(null, EAX, EBX);
+    instruction.execute(machine);
+    String testOutput = instruction.toString();
+    Assertions.assertEquals(expectedOutput, testOutput);
+  }
+
+  @Test
+  void toStringWithLabelsTest() {
+    String expectedOutput = "f3: div EAX EBX";
+    registers.set(EAX, 10);
+    registers.set(EBX, 2);
+    Instruction instruction = new DivInstruction("f3", EAX, EBX);
+    instruction.execute(machine);
+    String testOutput = instruction.toString();
+    Assertions.assertEquals(expectedOutput, testOutput);
+  }
 }

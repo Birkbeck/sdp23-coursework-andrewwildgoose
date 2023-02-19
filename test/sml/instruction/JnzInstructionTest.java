@@ -44,4 +44,24 @@ class JnzInstructionTest {
     Instruction instruction = new JnzInstruction(null, EBX, "f3");
     Assertions.assertEquals(2, instruction.execute(machine));
   }
+
+  @Test
+  void toStringTest() {
+    String expectedOutput = "jnz EAX f3";
+    registers.set(EAX, 0);
+    Instruction instruction = new JnzInstruction(null, EAX, "f3");
+    instruction.execute(machine);
+    String testOutput = instruction.toString();
+    Assertions.assertEquals(expectedOutput, testOutput);
+  }
+
+  @Test
+  void toStringWithLabelTest() {
+    String expectedOutput = "f1: jnz EAX f3";
+    registers.set(EAX, 0);
+    Instruction instruction = new JnzInstruction("f1", EAX, "f3");
+    instruction.execute(machine);
+    String testOutput = instruction.toString();
+    Assertions.assertEquals(expectedOutput, testOutput);
+  }
 }

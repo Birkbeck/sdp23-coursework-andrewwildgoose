@@ -43,4 +43,25 @@ class MovInstructionTest {
     instruction.execute(machine);
     Assertions.assertEquals(-5, machine.getRegisters().get(EAX));
   }
+
+  @Test
+  void toStringTest() {
+    String expectedOutput = "mov EAX -5";
+    registers.set(EAX, 0);
+    registers.set(EBX, 6);
+    Instruction instruction = new MovInstruction(null, EAX, -5);
+    instruction.execute(machine);
+    String testOutput = instruction.toString();
+    Assertions.assertEquals(expectedOutput, testOutput);
+  }
+
+  @Test
+  void toStringWithLabelTest() {
+    String expectedOutput = "f3: mov EAX 5";
+    registers.set(EAX, 5);
+    Instruction instruction = new MovInstruction("f3", EAX, 5);
+    instruction.execute(machine);
+    String testOutput = instruction.toString();
+    Assertions.assertEquals(expectedOutput, testOutput);
+  }
 }

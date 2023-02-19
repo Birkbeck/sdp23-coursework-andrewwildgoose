@@ -50,4 +50,24 @@ class OutInstructionTest {
     Assertions.assertEquals("-5", outputStream.toString()
             .trim());
   }
+
+  @Test
+  void toStringTest() {
+    String expectedOutput = "out EAX";
+    registers.set(EAX, 5);
+    Instruction instruction = new OutInstruction(null, EAX);
+    instruction.execute(machine);
+    String testOutput = instruction.toString();
+    Assertions.assertEquals(expectedOutput, testOutput);
+  }
+
+  @Test
+  void toStringWithLabelTest() {
+    String expectedOutput = "f3: out EAX";
+    registers.set(EAX, 5);
+    Instruction instruction = new OutInstruction("f3", EAX);
+    instruction.execute(machine);
+    String testOutput = instruction.toString();
+    Assertions.assertEquals(expectedOutput, testOutput);
+  }
 }
