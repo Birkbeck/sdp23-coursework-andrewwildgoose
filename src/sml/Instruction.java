@@ -68,8 +68,7 @@ public abstract class Instruction {
 	// TODO: Make sure that subclasses also implement equals and hashCode (needed in class Machine).
 
 	public boolean equals(Object o) {
-		if (o instanceof Instruction) {
-			Instruction other = (Instruction) o;
+		if (o instanceof Instruction other) {
 			return Objects.equals(this.label, other.getLabel())
 					&& Objects.equals(this.opcode, other.getOpcode())
 					&& Objects.equals(this.toString(), other.toString());
