@@ -12,7 +12,7 @@ import sml.RegisterName;
  * If the contents the register 'source' is not zero,
  * make the statement labeled 'L' the next statement
  * to execute.
- * @author Andrew Wildgoose
+ * @author AndrewWildgoose
  */
 
 public class JnzInstruction extends Instruction {

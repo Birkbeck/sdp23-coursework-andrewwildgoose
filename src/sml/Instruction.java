@@ -5,9 +5,11 @@ package sml;
 import java.util.Objects;
 
 /**
- * Represents an abstract instruction.
+ * Represents an abstract instruction. provides the super class
+ * for all concrete instructions along with the constructor and a
+ * number of class methods including equals(), getLabel() and getOpcode().
  *
- * @author ...
+ * @author AndrewWildgoose
  */
 public abstract class Instruction {
 	protected final String label;

@@ -10,7 +10,7 @@ import sml.RegisterName;
  * Represents an out instruction in the sml language.
  * Takes the contents a register 'source' and prints
  * the contents of the register to the console.
- * @author Andrew Wildgoose
+ * @author AndrewWildgoose
  */
 
 public class OutInstruction extends Instruction {

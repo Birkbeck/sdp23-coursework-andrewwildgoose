@@ -11,7 +11,7 @@ import sml.RegisterName;
  * Takes the contents one register 'result', adds the
  * contents of another register 'source' and stores
  * the result in the 'result' register.
- * @author Andrew Wildgoose
+ * @author AndrewWildgoose
  */
 
 public class AddInstruction extends Instruction {

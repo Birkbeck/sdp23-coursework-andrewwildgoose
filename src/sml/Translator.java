@@ -11,11 +11,13 @@ import java.util.Scanner;
 import static sml.Registers.Register;
 
 /**
- * This class ....
+ * This class takes a file name which it then reads, line by line,
+ * decodes the line into the appropriate instruction and then adds
+ * it to the programme ready to be executed by the machine.
  * <p>
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
  *
- * @author ...
+ * @author Andrew Wildgoose
  */
 public final class Translator {
 

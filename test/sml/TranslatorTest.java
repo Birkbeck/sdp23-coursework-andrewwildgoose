@@ -11,6 +11,13 @@ import java.io.PrintStream;
 
 import static sml.Registers.Register.EAX;
 
+/**
+ * Test cases to ensure Translator correctly decodes and passes
+ * instructions to the programme ready to be executed.
+ *
+ * @author AndrewWildgoose
+ */
+
 public class TranslatorTest {
 
     private Machine machine;
@@ -29,7 +36,8 @@ public class TranslatorTest {
         machine = null;
     }
 
-    /** Test for mov instructions - tested first as all other tests will require
+    /**
+     * Test for mov instructions - tested first as all other tests will require
      * values adding to the registers using the mov instruction.
      * @throws IOException
      */
@@ -44,7 +52,8 @@ public class TranslatorTest {
         Assertions.assertEquals(5, machine.getRegisters().get(EAX));
     }
 
-    /** Tests for add instructions.
+    /**
+     * Tests for add instructions.
      * @throws IOException
      */
 
@@ -68,7 +77,8 @@ public class TranslatorTest {
         Assertions.assertEquals(1, machine.getRegisters().get(EAX));
     }
 
-    /** Tests for sub instructions.
+    /**
+     * Tests for sub instructions.
      * @throws IOException
      */
 
@@ -91,7 +101,8 @@ public class TranslatorTest {
         Assertions.assertEquals(-11, machine.getRegisters().get(EAX));
     }
 
-    /** Tests for mul instructions.
+    /**
+     * Tests for mul instructions.
      * @throws IOException
      */
 
@@ -115,7 +126,8 @@ public class TranslatorTest {
         Assertions.assertEquals(-24, machine.getRegisters().get(EAX));
     }
 
-    /** Tests for div instructions.
+    /**
+     * Tests for div instructions.
      * @throws IOException
      */
 
@@ -139,7 +151,8 @@ public class TranslatorTest {
         Assertions.assertEquals(-4, machine.getRegisters().get(EAX));
     }
 
-    /** Tests for out instructions.
+    /**
+     * Tests for out instructions.
      * @throws IOException
      */
 
@@ -165,11 +178,13 @@ public class TranslatorTest {
                 .trim());
     }
 
-    /** Tests for jnz instructions.
+    /**
+     * Tests for jnz instructions.
      * @throws IOException
      */
 
-    /** jnz test to ensure instruction order is changed:
+    /**
+     * jnz test to ensure instruction order is changed:
      * register EAX initiated as '1', register EBX initiated as '5'.
      * jnz instruction will jump to last instruction which prints
      * the value of EAX to the console, the add instruction in between
@@ -186,7 +201,8 @@ public class TranslatorTest {
                 .trim());
     }
 
-    /** jnz test to ensure instruction order is NOT changed:
+    /**
+     * jnz test to ensure instruction order is NOT changed:
      * register EAX initiated as '0', register EBX initiated as '5'.
      * jnz instruction will NOT miss the add instruction in between
      * and will instead add the value of EBX ('5') to the EAX register

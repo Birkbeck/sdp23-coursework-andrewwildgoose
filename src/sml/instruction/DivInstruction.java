@@ -7,11 +7,11 @@ import sml.RegisterName;
 // TODO: write a JavaDoc for the class
 
 /**
- * Represents an add instruction in the sml language.
+ * Represents a div instruction in the sml language.
  * Takes the contents one register 'result', divides
  * it by the contents of another register 'source' and
  * stores the result in the 'result' register.
- * @author Andrew Wildgoose
+ * @author AndrewWildgoose
  */
 
 public class DivInstruction extends Instruction {

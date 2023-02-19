@@ -7,8 +7,12 @@ import java.util.Objects;
 // TODO: write a JavaDoc for the class
 
 /**
+ * This class records any labels that are present in the instructions
+ * of a programme and their index position in the programme, thus
+ * allowing the jnz instructions to correctly jump to the specified
+ * instruction if the jump condition has been met.
  *
- * @author ...
+ * @author AndrewWildgoose
  */
 public final class Labels {
 	private final Map<String, Integer> labels = new HashMap<>();

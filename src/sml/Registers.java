@@ -6,8 +6,11 @@ import java.util.stream.Collectors;
 // TODO: write a JavaDoc for the class
 
 /**
- *
- * @author ...
+ * Representation of the registers associated with each machine.
+ * The constructor initialises them all and places the value '0'.
+ * Provides getters and setters to update and return the values of
+ * the registers for use in a program.
+ * @author AndrewWildgoose
  */
 public final class Registers {
     private final Map<Register, Integer> registers = new HashMap<>();

@@ -9,7 +9,7 @@ import sml.RegisterName;
 /**
  * Represents a mov instruction in the sml language.
  * stores the value 'x' in the register 'result'.
- * @author Andrew Wildgoose
+ * @author AndrewWildgoose
  */
 
 public class MovInstruction extends Instruction {
