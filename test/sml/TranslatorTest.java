@@ -30,7 +30,6 @@ public class TranslatorTest {
     void setUp() {
         machine = new Machine(new Registers());
         System.setOut(new PrintStream(outputStream));
-        //...
     }
 
     @AfterEach
@@ -39,7 +38,7 @@ public class TranslatorTest {
     }
 
     /**
-     * Testing custom Exception class LabelAlreadyInUseException catches
+     * Integration testing for custom Exception class LabelAlreadyInUseException catches
      * duplicate label and returns correctly formatted error message.
      * @throws LabelAlreadyInUseException
      */

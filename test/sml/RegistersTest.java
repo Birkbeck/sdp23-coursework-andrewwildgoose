@@ -5,11 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
-import java.util.stream.Stream;
-
 import static sml.Registers.Register.EAX;
-import static sml.Registers.Register;
 
 /**
  * Tests for Registers class.
@@ -41,7 +37,7 @@ public class RegistersTest {
     }
 
     /**
-     * tests for overriden equals() method.
+     * tests for overridden equals() method.
      */
     // Test to ensure newly created sets of registers are considered equal
     // after being initialised all containing '0'.
@@ -65,5 +61,15 @@ public class RegistersTest {
     void equalsTest3() {
         registers1.set(EAX, 1);
         Assertions.assertFalse(registers1.equals(registers2));
+    }
+
+    /**
+     * Testing overriden toString() method.
+     */
+
+    @Test
+    void toStringTest() {
+        String resisters1Expected = "[EAX = 0, EBX = 0, ECX = 0, EDX = 0, ESP = 0, EBP = 0, ESI = 0, EDI = 0]";
+        Assertions.assertEquals(resisters1Expected, registers1.toString());
     }
 }
