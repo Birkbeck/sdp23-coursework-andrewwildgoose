@@ -4,7 +4,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import sml.exceptions.LabelAlreadyInUseException;
 
+import javax.management.InvalidApplicationException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -37,8 +39,23 @@ public class TranslatorTest {
     }
 
     /**
-     * Test for mov instructions - tested first as all other tests will require
-     * values adding to the registers using the mov instruction.
+     * Testing custom Exception class LabelAlreadyInUseException catches
+     * duplicate label and returns correctly formatted error message.
+     * @throws LabelAlreadyInUseException
+     */
+    @Test()
+    void duplicateLabelTest1() throws LabelAlreadyInUseException{
+        String labelTest1 = "smlFilesForTesting/labelTestFiles/labelTest1.sml";
+        translator = new Translator(labelTest1);
+        LabelAlreadyInUseException thrown = Assertions.assertThrows(
+                LabelAlreadyInUseException.class, () ->
+                translator.readAndTranslate(machine.getLabels(), machine.getProgram()));
+        Assertions.assertTrue(thrown.getMessage().contentEquals("Label: f1 already in use"));
+    }
+
+    /**
+     * Test for mov instructions - tested first as all other instruction 
+     * tests will require values adding to the registers using the mov instruction.
      * @throws IOException
      */
 

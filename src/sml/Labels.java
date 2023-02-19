@@ -1,5 +1,8 @@
 package sml;
 
+import sml.exceptions.LabelAlreadyInUseException;
+
+import java.util.DuplicateFormatFlagsException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -23,10 +26,12 @@ public final class Labels {
 	 * @param label the label
 	 * @param address the address the label refers to
 	 */
-	public void addLabel(String label, int address) {
+	public void addLabel(String label, int address) throws LabelAlreadyInUseException {
 		Objects.requireNonNull(label);
 		// TODO: Add a check that there are no label duplicates.
-		labels.put(label, address);
+		if (labels.containsKey(label)) {
+			throw new LabelAlreadyInUseException("Label: " + label + " already in use");
+		} else {labels.put(label, address);}
 	}
 
 	/**
