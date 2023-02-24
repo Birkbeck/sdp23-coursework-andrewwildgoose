@@ -3,8 +3,6 @@ package sml;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.lang.reflect.*;
@@ -51,15 +49,8 @@ public final class Translator {
                     program.add(instruction);
                 }
             }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
+        } catch (ClassNotFoundException | InvocationTargetException | NoSuchMethodException | InstantiationException |
+                 IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
@@ -78,26 +69,18 @@ public final class Translator {
         if (line.isEmpty())
             return null;
 
-        // TODO: add code for all other types of instructions
-
-        // TODO: Then, replace the switch by using the Reflection API
-        System.out.println("Line before opcode: " + line);
+        // Scan the line for the instruction and operands
         String opcode = scan();
-        System.out.println("Line before r: " + line);
         String r = scan();
-        System.out.println("Line before s: " + line);
         String s = scan();
-        System.out.println("Line after s: " + line);
         // Construct the full class name from the opcode
         String instructionName = "sml.instruction." + capitalize(opcode) + "Instruction";
 
-        String[] paramsWithNull = new String[]{label, opcode, r, s};
-        String[] params = getParams(paramsWithNull).toArray(new String[0]);
+        String[] params = new String[]{label, r, s}; // List of parameters to be passed into the factory.
 
-        System.out.println("Params before factory:");
-        System.out.println(Arrays.toString(params));
-
+        // TODO: make factory a singleton
         InstructionFactory factory = new InstructionFactory();
+
         try {return factory.build(instructionName, params);} catch (Exception e) {
             System.out.println("Unknown instruction: " + opcode + "\nCausing: " + e);
         }
@@ -115,16 +98,6 @@ public final class Translator {
         // undo scanning the word
         line = word + " " + line;
         return null;
-    }
-
-    private List<String> getParams(String... args) {
-        List<String> params = new ArrayList<>();
-        for (String arg : args) {
-            if (!(arg == null)) {
-                params.add(arg);
-            }
-        }
-        return params;
     }
 
     /*
