@@ -1,14 +1,16 @@
 package sml;
 
-import sml.instruction.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Scanner;
+import java.lang.reflect.*;
 
-import static sml.Registers.Register;
+import sml.instruction.*;
+import static sml.Registers.*;
+import static sml.InstructionFactory.*;
+
 
 /**
  * This class takes a file name which it then reads, line by line,
@@ -51,6 +53,16 @@ public final class Translator {
                     program.add(instruction);
                 }
             }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -63,12 +75,33 @@ public final class Translator {
      * The input line should consist of a single SML instruction,
      * with its label already removed.
      */
-    private Instruction getInstruction(String label) {
+    private Instruction getInstruction(String label) throws ClassNotFoundException, NoSuchMethodException,
+            InvocationTargetException, InstantiationException, IllegalAccessException {
         if (line.isEmpty())
             return null;
 
-//        // TODO: add code for all other types of instructions
+        // TODO: add code for all other types of instructions
+
+        // TODO: Then, replace the switch by using the Reflection API
         String opcode = scan();
+        String r = scan();
+        String s = scan();
+
+        // Construct the full class name from the opcode
+        String instructionType = "sml.instruction." + capitalize(opcode) + "Instruction";
+
+        // determine how many args the constructor requires
+        if (opcode.equals("out")) {
+            return buildInstruction(instructionType, label, Register.valueOf(r));
+        } else if (opcode.equals("mov")) {
+            return buildInstruction(instructionType, label, Register.valueOf(r), Integer.valueOf(s));
+        } else if (opcode.equals("jnz")) {
+            return buildInstruction(instructionType, label, Register.valueOf(r), s);
+        } else {
+            return buildInstruction(instructionType, label, Register.valueOf(r), Register.valueOf(s));
+        }
+
+
 //        switch (opcode) {
 //            case AddInstruction.OP_CODE -> {
 //                String r = scan();
@@ -105,8 +138,6 @@ public final class Translator {
 //                return new JnzInstruction(label, Register.valueOf(r), s);
 //            }
 
-            // TODO: Then, replace the switch by using the Reflection API
-
             // TODO: Next, use dependency injection to allow this machine class
             //       to work with different sets of opcodes (different CPUs)
 
@@ -114,7 +145,6 @@ public final class Translator {
 //                System.out.println("Unknown instruction: " + opcode);
 //            }
 //        }
-        return null;
     }
 
 
@@ -143,5 +173,9 @@ public final class Translator {
             }
 
         return line;
+    }
+
+    private String capitalize(String word) {
+        return word.substring(0, 1).toUpperCase() + word.substring(1);
     }
 }
