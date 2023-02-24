@@ -2,40 +2,36 @@ package sml;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 import static sml.Registers.Register;
 
 public class InstructionFactory {
 
-    // Constructor for Instructions that take a label and two registers as arguments
-    public static Instruction buildInstruction(String instructionName, String label, Register r, Register s)
-            throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        Class<?> instructionClass = Class.forName(instructionName);
-        Constructor<?> constructor = instructionClass.getDeclaredConstructor(String.class, RegisterName.class, RegisterName.class);
-        return (Instruction) constructor.newInstance(label, r, s);
+    public Instruction build(String instructionName, String... args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        Class<?> instruction = Class.forName(instructionName);
+        Constructor<?>[] constructors = instruction.getConstructors();
+        Object[] params = getParams(constructors[0], args);
+        System.out.println(Arrays.toString(params));
+        return (Instruction) constructors[0].newInstance(params);
+
+
     }
 
-    // Constructor for Instructions that take a label and one register as arguments
-    public static Instruction buildInstruction(String instructionName, String label, Register r)
-            throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        Class<?> instructionClass = Class.forName(instructionName);
-        Constructor<?> constructor = instructionClass.getDeclaredConstructor(String.class, RegisterName.class);
-        return (Instruction) constructor.newInstance(label, r);
-    }
-
-    // Constructor for Instructions that take a label and one register and an Integer value as arguments
-    public static Instruction buildInstruction(String instructionName, String label, Register r, Integer s)
-            throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        Class<?> instructionClass = Class.forName(instructionName);
-        Constructor<?> constructor = instructionClass.getDeclaredConstructor(String.class, RegisterName.class, Integer.class);
-        return (Instruction) constructor.newInstance(label, r, s);
-    }
-
-    // Constructor for Instructions that take a label and one register and a String value as arguments
-    public static Instruction buildInstruction(String instructionName, String label, Register r, String s)
-            throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        Class<?> instructionClass = Class.forName(instructionName);
-        Constructor<?> constructor = instructionClass.getDeclaredConstructor(String.class, RegisterName.class, String.class);
-        return (Instruction) constructor.newInstance(label, r, s);
+    public static Object[] getParams(Constructor constructor, String... args) {
+        Object[] params = new Object[args.length];
+        Class<?>[] parameterTypes = constructor.getParameterTypes();
+        for (int i = 0; i < args.length; i++) {
+            System.out.println("Arg: " + args[i]);
+            if (parameterTypes[i] == Integer.class) {
+                params[i] = Integer.valueOf(args[i]);
+            } else if (parameterTypes[i] == String.class) {
+                params[i] = String.valueOf(args[i]);
+            } else if (parameterTypes[i] == RegisterName.class) {
+                params[i] = Register.valueOf(args[i]);
+            }
+            System.out.println("Param: " + params[i]);
+        }
+        return params;
     }
 }

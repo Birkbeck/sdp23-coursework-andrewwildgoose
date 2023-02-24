@@ -3,13 +3,11 @@ package sml;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.lang.reflect.*;
-
-import sml.instruction.*;
-import static sml.Registers.*;
-import static sml.InstructionFactory.*;
 
 
 /**
@@ -83,68 +81,29 @@ public final class Translator {
         // TODO: add code for all other types of instructions
 
         // TODO: Then, replace the switch by using the Reflection API
+        System.out.println("Line before opcode: " + line);
         String opcode = scan();
+        System.out.println("Line before r: " + line);
         String r = scan();
+        System.out.println("Line before s: " + line);
         String s = scan();
-
+        System.out.println("Line after s: " + line);
         // Construct the full class name from the opcode
-        String instructionType = "sml.instruction." + capitalize(opcode) + "Instruction";
+        String instructionName = "sml.instruction." + capitalize(opcode) + "Instruction";
 
-        // determine how many args the constructor requires
-        if (opcode.equals("out")) {
-            return buildInstruction(instructionType, label, Register.valueOf(r));
-        } else if (opcode.equals("mov")) {
-            return buildInstruction(instructionType, label, Register.valueOf(r), Integer.valueOf(s));
-        } else if (opcode.equals("jnz")) {
-            return buildInstruction(instructionType, label, Register.valueOf(r), s);
-        } else {
-            return buildInstruction(instructionType, label, Register.valueOf(r), Register.valueOf(s));
+        String[] paramsWithNull = new String[]{label, opcode, r, s};
+        String[] params = getParams(paramsWithNull).toArray(new String[0]);
+
+        System.out.println("Params before factory:");
+        System.out.println(Arrays.toString(params));
+
+        InstructionFactory factory = new InstructionFactory();
+        try {return factory.build(instructionName, params);} catch (Exception e) {
+            System.out.println("Unknown instruction: " + opcode + "\nCausing: " + e);
         }
-
-
-//        switch (opcode) {
-//            case AddInstruction.OP_CODE -> {
-//                String r = scan();
-//                String s = scan();
-//                return new AddInstruction(label, Register.valueOf(r), Register.valueOf(s));
-//            }
-//            case SubInstruction.OP_CODE -> {
-//                String r = scan();
-//                String s = scan();
-//                return new SubInstruction(label, Register.valueOf(r), Register.valueOf(s));
-//            }
-//            case MulInstruction.OP_CODE -> {
-//                String r = scan();
-//                String s = scan();
-//                return new MulInstruction(label, Register.valueOf(r), Register.valueOf(s));
-//            }
-//            case MovInstruction.OP_CODE -> {
-//                String r = scan();
-//                String s = scan();
-//                return new MovInstruction(label, Register.valueOf(r), Integer.valueOf(s));
-//            }
-//            case DivInstruction.OP_CODE -> {
-//                String r = scan();
-//                String s = scan();
-//                return new DivInstruction(label, Register.valueOf(r), Register.valueOf(s));
-//            }
-//            case OutInstruction.OP_CODE -> {
-//                String r = scan();
-//                return new OutInstruction(label, Register.valueOf(r));
-//            }
-//            case JnzInstruction.OP_CODE -> {
-//                String r = scan();
-//                String s = scan();
-//                return new JnzInstruction(label, Register.valueOf(r), s);
-//            }
-
+        return null;
             // TODO: Next, use dependency injection to allow this machine class
             //       to work with different sets of opcodes (different CPUs)
-
-//            default -> {
-//                System.out.println("Unknown instruction: " + opcode);
-//            }
-//        }
     }
 
 
@@ -156,6 +115,16 @@ public final class Translator {
         // undo scanning the word
         line = word + " " + line;
         return null;
+    }
+
+    private List<String> getParams(String... args) {
+        List<String> params = new ArrayList<>();
+        for (String arg : args) {
+            if (!(arg == null)) {
+                params.add(arg);
+            }
+        }
+        return params;
     }
 
     /*
