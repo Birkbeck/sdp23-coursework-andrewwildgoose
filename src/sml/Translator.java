@@ -1,5 +1,8 @@
 package sml;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import sml.instruction.MovInstruction;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -80,9 +83,12 @@ public final class Translator {
         // Collection of the parameters to pass into the factory.
         String[] params = new String[]{label, r, s};
 
-        // Construct a factory and pass the instruction and parameters to it to return a fully formed instruction.
-        InstructionFactory factory = new InstructionFactory();
-        try {return factory.build(instructionName, params);} catch (Exception e) {
+        try {
+            // get the bean factory
+            var factory = new ClassPathXmlApplicationContext("/beans.xml");
+            InstructionBuilder ib = (InstructionBuilder) factory.getBean("instruction");
+            return ib.build();
+        } catch (Exception e) {
             System.out.println("Unknown instruction: " + opcode + "\nCausing: " + e);
         }
         return null;
