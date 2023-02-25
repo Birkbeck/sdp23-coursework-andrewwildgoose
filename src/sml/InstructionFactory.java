@@ -33,6 +33,8 @@ public class InstructionFactory {
 
         Object[] params = new Object[parameterTypes.length];
 
+        // Traverse the given string parameters and cast them to the
+        // appropriate class type for the given instruction.
         for (int i = 0; i < parameterTypes.length; i++) {
             if (!(args[i] == null)) {
                 if (parameterTypes[i] == Integer.class) {
