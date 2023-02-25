@@ -73,14 +73,15 @@ public final class Translator {
         String opcode = scan();
         String r = scan();
         String s = scan();
+
         // Construct the full class name from the opcode
         String instructionName = "sml.instruction." + capitalize(opcode) + "Instruction";
 
-        String[] params = new String[]{label, r, s}; // List of parameters to be passed into the factory.
+        // Collection of the parameters to pass into the factory.
+        String[] params = new String[]{label, r, s};
 
-        // TODO: make factory a singleton
+        // Construct a factory and pass the instruction and parameters to it to return a fully formed instruction.
         InstructionFactory factory = new InstructionFactory();
-
         try {return factory.build(instructionName, params);} catch (Exception e) {
             System.out.println("Unknown instruction: " + opcode + "\nCausing: " + e);
         }
@@ -100,7 +101,7 @@ public final class Translator {
         return null;
     }
 
-    /*
+    /**
      * Return the first word of line and remove it from line.
      * If there is no word, return "".
      */

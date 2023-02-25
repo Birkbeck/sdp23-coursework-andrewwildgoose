@@ -5,7 +5,12 @@ import java.lang.reflect.InvocationTargetException;
 
 import static sml.Registers.Register;
 
-// TODO: write javadoc and method annotations
+
+/**
+ * InstructionFactory class which receives an instruction class name and
+ * a string of its parameters, uses the Reflection API to retrieve the appropriate
+ * constructor and return an instance of that instruction using the given parameters.
+ */
 public class InstructionFactory {
 
     public Instruction build(String instructionName, String... args)
@@ -13,6 +18,7 @@ public class InstructionFactory {
         Class<?> instruction = Class.forName(instructionName);
         Constructor<?>[] constructors = instruction.getConstructors();
         Object[] params = getParams(constructors[0], args);
+
         return (Instruction) constructors[0].newInstance(params);
     }
 
@@ -24,7 +30,9 @@ public class InstructionFactory {
       */
     public static Object[] getParams(Constructor<?> constructor, String... args) {
         Class<?>[] parameterTypes = constructor.getParameterTypes();
+
         Object[] params = new Object[parameterTypes.length];
+
         for (int i = 0; i < parameterTypes.length; i++) {
             if (!(args[i] == null)) {
                 if (parameterTypes[i] == Integer.class) {
