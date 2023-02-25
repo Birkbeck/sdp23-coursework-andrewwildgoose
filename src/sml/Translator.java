@@ -87,7 +87,7 @@ public final class Translator {
             // get the bean factory
             var factory = new ClassPathXmlApplicationContext("/beans.xml");
             InstructionBuilder ib = (InstructionBuilder) factory.getBean("instruction");
-            return ib.build();
+            return ib.buildInstruction();
         } catch (Exception e) {
             System.out.println("Unknown instruction: " + opcode + "\nCausing: " + e);
         }
