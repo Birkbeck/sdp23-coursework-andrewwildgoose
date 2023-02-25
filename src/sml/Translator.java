@@ -1,7 +1,7 @@
 package sml;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import sml.instruction.MovInstruction;
+import sml.instructionBuilders.InstructionBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -86,8 +86,8 @@ public final class Translator {
         try {
             // get the bean factory
             var factory = new ClassPathXmlApplicationContext("/beans.xml");
-            InstructionBuilder ib = (InstructionBuilder) factory.getBean("instruction");
-            return ib.buildInstruction();
+            InstructionBuilder ib = (InstructionBuilder) factory.getBean(opcode);
+            return ib.buildInstruction(params);
         } catch (Exception e) {
             System.out.println("Unknown instruction: " + opcode + "\nCausing: " + e);
         }

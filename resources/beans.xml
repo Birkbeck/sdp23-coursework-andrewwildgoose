@@ -15,6 +15,12 @@
     <!-- Note that there is no messageProvider property in the renderer.
             It is because the wiring requirement is specified through
             @Autowired annotation of the constructor -->
-    <bean id="instruction" class="sml.InstructionBuilder" abstract="true">
-    </bean>
+    <bean id="mov" class="sml.instructionBuilders.MovInstructionBuilder"/>
+    <bean id="add" class="sml.instructionBuilders.AddInstructionBuilder"/>
+    <bean id="sub" class="sml.instructionBuilders.SubInstructionBuilder"/>
+    <bean id="div" class="sml.instructionBuilders.DivInstructionBuilder"/>
+    <bean id="mul" class="sml.instructionBuilders.MulInstructionBuilder"/>
+    <bean id="out" class="sml.instructionBuilders.OutInstructionBuilder"/>
+    <bean id="jnz" class="sml.instructionBuilders.JnzInstructionBuilder"/>
+
 </beans>
