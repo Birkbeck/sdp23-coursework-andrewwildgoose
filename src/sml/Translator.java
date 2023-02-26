@@ -81,13 +81,13 @@ public final class Translator {
         String[] params = new String[]{label, r, s};
 
         // Construct a factory and pass the instruction and parameters to it to return a fully formed instruction.
-        InstructionFactory factory = new InstructionFactory();
-        try {return factory.build(instructionName, params);} catch (Exception e) {
+        //InstructionFactory factory = new InstructionFactory();
+
+        try {
+            return InstructionFactory.build(instructionName, params);} catch (Exception e) {
             System.out.println("Unknown instruction: " + opcode + "\nCausing: " + e);
         }
         return null;
-            // TODO: Next, use dependency injection to allow this machine class
-            //       to work with different sets of opcodes (different CPUs)
     }
 
 
