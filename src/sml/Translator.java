@@ -1,5 +1,6 @@
 package sml;
 
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import sml.instructionBuilders.InstructionBuilder;
 
@@ -77,23 +78,19 @@ public final class Translator {
         String r = scan();
         String s = scan();
 
-        // Construct the full class name from the opcode
-        String instructionName = "sml.instruction." + capitalize(opcode) + "Instruction";
-
         // Collection of the parameters to pass into the factory.
         String[] params = new String[]{label, r, s};
 
         try {
-            // get the bean factory
+            // get the bean factory, access the correct InstructionBuilder using the opcode to
+            // match the bean reference to retrieve the builder.
             var factory = new ClassPathXmlApplicationContext("/beans.xml");
             InstructionBuilder ib = (InstructionBuilder) factory.getBean(opcode);
             return ib.buildInstruction(params);
-        } catch (Exception e) {
-            System.out.println("Unknown instruction: " + opcode + "\nCausing: " + e);
+        } catch (NoSuchBeanDefinitionException e) {
+            System.out.println("Unknown instruction: " + opcode + "\nThat instruction type has not been added to this translator");
+            throw (e);
         }
-        return null;
-            // TODO: Next, use dependency injection to allow this machine class
-            //       to work with different sets of opcodes (different CPUs)
     }
 
 

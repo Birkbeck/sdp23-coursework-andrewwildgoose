@@ -8,7 +8,7 @@ import sml.instruction.MovInstruction;
 public class MovInstructionBuilder implements InstructionBuilder {
 
     @Override
-    public Instruction buildInstruction(String[] params) {
+    public Instruction buildInstruction(String[] params) throws NumberFormatException {
         String label = params[0];
         RegisterName register = Register.valueOf(params[1]);
         Integer source = Integer.valueOf(params[2]);
