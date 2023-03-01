@@ -83,7 +83,7 @@ public final class Translator {
 
         try {
             // get the bean factory, access the correct InstructionBuilder using the opcode to
-            // match the bean reference to retrieve the builder.
+            // match the bean reference.
             var factory = new ClassPathXmlApplicationContext("/beans.xml");
             InstructionBuilder ib = (InstructionBuilder) factory.getBean(opcode);
             return ib.buildInstruction(params);
@@ -119,9 +119,5 @@ public final class Translator {
             }
 
         return line;
-    }
-
-    private String capitalize(String word) {
-        return word.substring(0, 1).toUpperCase() + word.substring(1);
     }
 }

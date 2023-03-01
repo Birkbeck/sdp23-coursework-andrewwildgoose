@@ -5,6 +5,12 @@ import sml.RegisterName;
 import sml.Registers.Register;
 import sml.instruction.SubInstruction;
 
+/**
+ * Builder for the sub instruction. Takes the parameters required
+ * in String format. Casts them to the appropriate type and returns a
+ * fully formed instruction using those parameters.
+ * @author AndrewWildgoose
+ */
 public class SubInstructionBuilder implements InstructionBuilder {
 
     @Override
